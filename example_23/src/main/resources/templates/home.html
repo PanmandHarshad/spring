@@ -19,7 +19,7 @@ Author URL: http://w3layouts.com
 <body>
 <!-- <div th:replace="header :: header">...</div> performs the replacement without any preprocessing. -->
 <!-- The first "header" is the template file name, and the second "header" is the fragment name within that template file. -->
-<div th:replace="header :: header"></div>
+<div th:replace="~{header :: header}"></div>
 
 <!-- banner section -->
 <section id="home" class="w3l-banner py-5">
@@ -351,7 +351,7 @@ Author URL: http://w3layouts.com
 </section>
 <!-- //call block -->
 
-<div th:replace="footer :: footer"></div>
+<div th:replace="~{footer :: footer}"></div>
 
 <!-- Js scripts -->
 <!-- move top -->
@@ -377,6 +377,7 @@ Author URL: http://w3layouts.com
             document.body.scrollTop = 0;
             document.documentElement.scrollTop = 0;
         }
+
 
 
 
@@ -434,6 +435,7 @@ Author URL: http://w3layouts.com
 
 
 
+
 </script>
 <!-- //MENU-JS -->
 
@@ -444,6 +446,7 @@ Author URL: http://w3layouts.com
                 $('body').toggleClass('noscroll');
             })
         });
+
 
 
 

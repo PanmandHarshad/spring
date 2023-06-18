@@ -22,7 +22,7 @@ public class ProjectSecurityConfig {
          This is handled in thymeleaf itself.
          This is needed only if your application is developed using simple html pages
          */
-        http.csrf((csrf) -> csrf.disable());
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"));
 
         http.authorizeHttpRequests(requests ->
                 requests
@@ -35,6 +35,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
+                        .requestMatchers("/logout").permitAll()
                         .anyRequest().denyAll());
 
         http.formLogin(formLogin ->

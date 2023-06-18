@@ -50,7 +50,8 @@ Author URL: http://w3layouts.com
                         th:each="error : ${#fields.errors('contact.*')}" th:text="${error}"></li>
                 </ul>
                 <!-- while referring bean will use '$' and while referring field will use '*' -->
-                <form th:action="@{/saveMsg}" method="post" class="signin-form" th:object="${contact}">
+                <!-- Internally thymeleaf handles the CSRF, as of now will be disabling here and handling using spring security -->
+                <form action="/saveMsg" method="post" class="signin-form" th:object="${contact}">
                     <div class="input-grids">
                         <div class="row">
                             <div class="col-sm-6">
@@ -164,6 +165,8 @@ Author URL: http://w3layouts.com
 
 
 
+
+
 </script>
 <!-- //move top -->
 
@@ -209,6 +212,8 @@ Author URL: http://w3layouts.com
 
 
 
+
+
 </script>
 <!-- //MENU-JS -->
 
@@ -219,6 +224,8 @@ Author URL: http://w3layouts.com
                 $('body').toggleClass('noscroll');
             })
         });
+
+
 
 
 

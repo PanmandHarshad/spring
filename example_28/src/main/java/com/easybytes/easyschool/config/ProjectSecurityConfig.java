@@ -12,6 +12,15 @@ public class ProjectSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        /**
+         By default, any request with HTTP method that can update data like POST,
+         PUT will be stopped with 403 error due to CSRF protection
+
+         This is handled in thymeleaf itself.
+         This is needed only if your application is developed using simple html pages
+         */
+        http.csrf((csrf) -> csrf.disable());
+
         http.authorizeHttpRequests(requests ->
                 requests.requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/all").authenticated()

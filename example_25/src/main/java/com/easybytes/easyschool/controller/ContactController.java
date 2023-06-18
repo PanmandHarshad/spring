@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ContactController {
 
-    private static Logger logger = LoggerFactory.getLogger(ContactController.class);
-
     private ContactService contactService;
 
     @Autowired
@@ -55,6 +53,8 @@ public class ContactController {
         }
 
         contactService.saveMessageDetails(contact);
+        contactService.setCounter(contactService.getCounter() + 1);
+        log.info("Number of times contact form is submitted : " + contactService.getCounter());
 
         // This "redirect:/contact" is loading the fresh page
         return "redirect:/contact";

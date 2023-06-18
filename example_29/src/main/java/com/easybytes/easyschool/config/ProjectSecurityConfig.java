@@ -25,16 +25,34 @@ public class ProjectSecurityConfig {
         http.csrf((csrf) -> csrf.disable());
 
         http.authorizeHttpRequests(requests ->
-                requests.requestMatchers("", "/", "/home").authenticated()
+                requests
+                        .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/all").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
+                        .requestMatchers("/login").permitAll()
                         .anyRequest().denyAll());
 
-        http.formLogin(withDefaults());
+        http.formLogin(formLogin ->
+                formLogin
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/dashboard", true)
+                        .failureUrl("/login?error=true")
+                        .permitAll()
+        );
+
+        http.logout(logout ->
+                logout
+                        .logoutSuccessUrl("/login?error=false")
+                        .invalidateHttpSession(true)
+                        .permitAll());
+
         http.httpBasic(withDefaults());
 
         return http.build();

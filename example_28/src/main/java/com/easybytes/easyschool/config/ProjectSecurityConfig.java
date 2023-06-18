@@ -12,17 +12,15 @@ public class ProjectSecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        // TODO: Here pages that are marked as authenticated are not asking for authentication,
-        //  need to take case of those
         http.authorizeHttpRequests(requests ->
-                requests.requestMatchers("/home").permitAll()
-                        .requestMatchers("/holidays").authenticated()
+                requests.requestMatchers("", "/", "/home").permitAll()
+                        .requestMatchers("/holidays/all").authenticated()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
-                        .requestMatchers("/courses").authenticated()
+                        .requestMatchers("/courses").permitAll()
                         .requestMatchers("/about").permitAll()
                         .requestMatchers("/assets/**").permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().denyAll());
 
         http.formLogin(withDefaults());
         http.httpBasic(withDefaults());

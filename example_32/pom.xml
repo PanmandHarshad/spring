@@ -66,6 +66,15 @@
             <version>3.1.1.RELEASE</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <!--The app only needs the database and the JDBC driver at
+            runtime. The app does not need them for compilation. To instruct Maven we
+            only want these dependencies at runtime,we add the scope tag with the
+            value “runtime.”-->
+            <scope>runtime</scope>
+        </dependency>
 
     </dependencies>
 

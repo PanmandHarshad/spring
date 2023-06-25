@@ -1,8 +1,10 @@
 package com.easybytes.easyschool.config;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -23,6 +25,7 @@ public class ProjectSecurityConfig {
          This is needed only if your application is developed using simple html pages
          */
         http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()));
 
         http.authorizeHttpRequests(requests ->
                 requests
@@ -36,7 +39,11 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                         .anyRequest().denyAll());
+
+        // Disabling header, so that h2-console will be displayed
+        http.headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable));
 
         http.formLogin(formLogin ->
                 formLogin

@@ -30,6 +30,7 @@ public class ProjectSecurityConfig {
         http.authorizeHttpRequests(requests ->
                 requests
                         .requestMatchers("/dashboard").authenticated()
+                        .requestMatchers("/displayMessages").hasRole("ADMIN")
                         .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/all").permitAll()
                         .requestMatchers("/contact").permitAll()

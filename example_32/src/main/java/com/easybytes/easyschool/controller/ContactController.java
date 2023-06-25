@@ -14,6 +14,9 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -60,5 +63,13 @@ public class ContactController {
 
         // This "redirect:/contact" is loading the fresh page
         return "redirect:/contact";
+    }
+
+    @RequestMapping("/displayMessages")
+    public ModelAndView displayMessage(Model model) {
+        List<Contact> contactMsgs = contactService.findMsgsWithOpenStatus();
+        ModelAndView modelAndView = new ModelAndView("messages.html");
+        modelAndView.addObject("contactMsgs", contactMsgs);
+        return modelAndView;
     }
 }

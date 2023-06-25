@@ -1,9 +1,15 @@
 package com.easybytes.easyschool.repository;
 
 import com.easybytes.easyschool.model.Contact;
+import com.easybytes.easyschool.rowmappers.ContactRowMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
+
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  * @Repository stereotype annotation is used to add a bean of this class
@@ -26,5 +32,15 @@ public class ContactRepository {
 
         return jdbcTemplate.update(sql, contact.name(), contact.mobileNum(), contact.email(), contact.subject(),
                 contact.message(), contact.status(), contact.baseEntity().createdAt(), contact.baseEntity().createdBy());
+    }
+
+    public List<Contact> findMsgsWithStatus(String status) {
+        String sql = "SELECT * FROM CONTACT_MSG WHERE STATUS = ?";
+        return jdbcTemplate.query(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement preparedStatement) throws SQLException {
+                preparedStatement.setString(1, status);
+            }
+        }, new ContactRowMapper());
     }
 }

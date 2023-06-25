@@ -71,13 +71,13 @@ public class ProjectSecurityConfig {
         UserDetails userHarshad = User.withDefaultPasswordEncoder()
                 .username("Harshad")
                 .password("12345")
-                .roles("USER")
+                .roles("USER") // Here spring will add 'ROLE_' before 'USER', so role name will be 'ROLE_USER'
                 .build();
 
         UserDetails amdin = User.withDefaultPasswordEncoder()
                 .username("admin")
                 .password("54321")
-                .roles("USER", "ADMIN")
+                .roles("ADMIN")
                 .build();
 
         return new InMemoryUserDetailsManager(userHarshad, amdin);

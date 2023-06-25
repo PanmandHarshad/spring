@@ -31,6 +31,10 @@ public class ProjectSecurityConfig {
                 requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages").hasRole("ADMIN")
+                        // Added '/**' to '/closeMsg' because we are passing Id as query param from
+                        // It is better to have '/**' because if in future if we change query param
+                        // then we don't have to change here
+                        .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                         .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/all").permitAll()
                         .requestMatchers("/contact").permitAll()

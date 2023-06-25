@@ -1,5 +1,6 @@
 package com.easybytes.easyschool.controller;
 
+import com.easybytes.easyschool.model.BaseEntity;
 import com.easybytes.easyschool.model.Contact;
 import com.easybytes.easyschool.service.ContactService;
 import jakarta.validation.Valid;
@@ -27,7 +28,10 @@ public class ContactController {
 
     @RequestMapping(value = {"/contact"})
     public String displayContactPage(Model model) {
-        model.addAttribute("contact", new Contact("", "", "", "", ""));
+        BaseEntity baseEntity = new BaseEntity(null, "", null, "");
+        model.addAttribute("contact", new Contact(null, null, null, null, null,
+                null, null, baseEntity));
+
         return "contact.html";
     }
 
@@ -53,8 +57,6 @@ public class ContactController {
         }
 
         contactService.saveMessageDetails(contact);
-        contactService.setCounter(contactService.getCounter() + 1);
-        log.info("Number of times contact form is submitted : " + contactService.getCounter());
 
         // This "redirect:/contact" is loading the fresh page
         return "redirect:/contact";

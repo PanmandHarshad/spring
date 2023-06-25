@@ -12,6 +12,8 @@ public record Contact(
          @NotEmpty: Checks if a given field is not null and its size/length is greater than zero.
          @NotBlank: Checks if a given field is not null and trimmed length is greater than zero.
          */
+        Integer contactId,
+
         @NotBlank(message = "Name must not be blank")
         @Size(min = 3, message = "Name must be at least 3 characters long")
         String name,
@@ -30,7 +32,11 @@ public record Contact(
 
         @NotBlank(message = "Message must not be blank")
         @Size(min = 10, message = "Message must be at least 10 characters long")
-        String message
+        String message,
+
+        String status,
+
+        BaseEntity baseEntity
 ) {
 }
 

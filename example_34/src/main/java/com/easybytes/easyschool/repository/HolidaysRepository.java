@@ -28,7 +28,7 @@ public class HolidaysRepository {
     }
 
     public List<Holiday> findAllHolidays() {
-        String sql = "SELECT * FROM HOLIDAYS";
+        String sql = "SELECT * FROM holidays";
 
         // If column names in a table and field names in pojo/bean are same/matching,
         // then we can use BeanPropertyRowMapper which is provided by Spring framework

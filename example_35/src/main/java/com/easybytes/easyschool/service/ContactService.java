@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -18,10 +19,6 @@ public class ContactService {
     // This will invoke the ContactRepository from service layer
     @Autowired
     private ContactRepository contactRepository;
-
-    public ContactService() {
-        log.info("Contact service bean is initialized");
-    }
 
     public boolean saveMessageDetails(Contact contact) {
         boolean isSaved = false;
@@ -32,8 +29,8 @@ public class ContactService {
         Contact contact1 = new Contact(contact.contactId(), contact.name(), contact.mobileNum(),
                 contact.email(), contact.subject(), contact.message(), EazySchoolConstants.OPEN, baseEntity);
 
-        int result = contactRepository.saveContactMsg(contact1);
-        if (result > 0) {
+        Contact savedContact = contactRepository.save(contact1);
+        if (savedContact.contactId() > 0) {
             isSaved = true;
         }
 
@@ -41,16 +38,37 @@ public class ContactService {
     }
 
     public List<Contact> findMsgsWithOpenStatus() {
-        return contactRepository.findMsgsWithStatus(EazySchoolConstants.OPEN);
+        return contactRepository.findByStatus(EazySchoolConstants.OPEN);
     }
 
     public boolean updateMsgStatus(int contactId, String updatedBy) {
         boolean isUpdated = false;
 
-        int result = contactRepository.updateMsgStatus(contactId, EazySchoolConstants.CLOSE, updatedBy);
-        if (result > 0) {
-            isUpdated = true;
+        Optional<Contact> contact = contactRepository.findById(contactId);
+        if (contact.isPresent()) {
+            Contact contact1 = contact.get();
+            BaseEntity baseEntity = new BaseEntity(contact1.baseEntity().createdAt(),
+                    contact1.baseEntity().createdBy(),
+                    LocalDateTime.now(),
+                    updatedBy);
+
+            Contact contactToUpdate = new Contact(
+                    contact1.contactId(),
+                    contact1.name(),
+                    contact1.mobileNum(),
+                    contact1.email(),
+                    contact1.subject(),
+                    contact1.message(),
+                    EazySchoolConstants.CLOSE,
+                    baseEntity);
+
+            Contact updatedContact = contactRepository.save(contactToUpdate);
+
+            if (updatedContact.baseEntity().updatedBy() != null) {
+                isUpdated = true;
+            }
         }
+
         return isUpdated;
     }
 }

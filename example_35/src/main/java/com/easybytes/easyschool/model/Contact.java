@@ -1,17 +1,25 @@
 package com.easybytes.easyschool.model;
 
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.GenericGenerator;
 
+@Entity
+@Table(name = "contact_msg")
 public record Contact(
         /**
          @NotNull: Checks if a given field is not null but allows empty values & zero elements inside collections.
          @NotEmpty: Checks if a given field is not null and its size/length is greater than zero.
          @NotBlank: Checks if a given field is not null and trimmed length is greater than zero.
          */
+        @Id
+        @GeneratedValue(strategy = GenerationType.AUTO, generator = "native")
+        @GenericGenerator(name = "native", strategy = "native")
+        @Column(name = "contact_id")
         Integer contactId,
 
         @NotBlank(message = "Name must not be blank")

@@ -33,9 +33,7 @@ public class ContactController {
 
     @RequestMapping(value = {"/contact"})
     public String displayContactPage(Model model) {
-        BaseEntity baseEntity = new BaseEntity(null, null, null, null);
-        model.addAttribute("contact", new Contact(null, null, null, null, null,
-                null, null, baseEntity));
+        model.addAttribute("contact", new Contact());
 
         return "contact.html";
     }

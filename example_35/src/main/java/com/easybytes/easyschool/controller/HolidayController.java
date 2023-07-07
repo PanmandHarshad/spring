@@ -37,7 +37,7 @@ public class HolidayController {
         for (Holiday.Type type : values) {
             model.addAttribute(type.toString(),
                     holidayList.stream()
-                            .filter(holiday -> holiday.type().equals(type))
+                            .filter(holiday -> holiday.getType().equals(type))
                             .toList());
         }
 

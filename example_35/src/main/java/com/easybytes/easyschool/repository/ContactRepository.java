@@ -14,5 +14,6 @@ import java.util.List;
 @Repository
 public interface ContactRepository extends CrudRepository<Contact, Integer> {
 
+    // This is a derived query.
     List<Contact> findByStatus(String status);
 }

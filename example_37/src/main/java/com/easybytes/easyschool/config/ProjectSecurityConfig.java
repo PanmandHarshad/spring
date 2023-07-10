@@ -1,10 +1,8 @@
 package com.easybytes.easyschool.config;
 
-import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
@@ -24,7 +22,7 @@ public class ProjectSecurityConfig {
          This is handled in thymeleaf itself.
          This is needed only if your application is developed using simple html pages
          */
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg", "/public/**"));
 
         http.authorizeHttpRequests(requests ->
                 requests
@@ -35,7 +33,7 @@ public class ProjectSecurityConfig {
                         // then we don't have to change here
                         .requestMatchers("/closeMsg/**").hasRole("ADMIN")
                         .requestMatchers("", "/", "/home").permitAll()
-                        .requestMatchers("/holidays/all").permitAll()
+                        .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()
@@ -43,6 +41,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/assets/**").permitAll()
                         .requestMatchers("/login").permitAll()
                         .requestMatchers("/logout").permitAll()
+                        .requestMatchers("/public/**").permitAll()
                         .anyRequest().denyAll());
 
         http.formLogin(formLogin ->

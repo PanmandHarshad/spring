@@ -30,6 +30,8 @@ public class ProjectSecurityConfig {
                         // It is better to have '/**' because if in future if we change query param
                         // then we don't have to change here
                         .requestMatchers("/closeMsg/**").hasRole("ADMIN")
+                        .requestMatchers("/displayProfile").authenticated()
+                        .requestMatchers("/updateProfile").authenticated()
                         .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/contact").permitAll()

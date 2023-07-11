@@ -34,7 +34,7 @@ public class EasySchoolUsernamePwdAuthenticationProvider implements Authenticati
 
         if (null != person && person.getPersonId() > 0 && passwordEncoder.matches(password, person.getPwd())) {
             return new UsernamePasswordAuthenticationToken(
-                    person.getName(), // This will be considered as authenticated name
+                    email, // This will be considered as authenticated name
                     null,
                     getGrantedAuthorities(person.getRoles()));
         } else {

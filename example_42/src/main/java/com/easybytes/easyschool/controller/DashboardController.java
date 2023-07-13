@@ -22,6 +22,11 @@ public class DashboardController {
         model.addAttribute("username", person.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
         httpSession.setAttribute("loggedInPerson", person);
+
+        if (null != person.getEazyClass() && null != person.getEazyClass().getName()) {
+            model.addAttribute("enrolledClass", person.getEazyClass().getName());
+        }
+
         //throw new RuntimeException("It's been a bad day !!");
         return "dashboard.html";
     }

@@ -12,6 +12,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -76,4 +78,10 @@ public class Person extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "class_id", referencedColumnName = "classId", nullable = true)
     private EazyClass eazyClass;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(name = "person_courses",
+            joinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "personId")},
+            inverseJoinColumns = {@JoinColumn(name = "courseId", referencedColumnName = "course_Id")})
+    private Set<Courses> courses;
 }

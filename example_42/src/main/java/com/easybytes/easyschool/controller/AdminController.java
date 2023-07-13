@@ -1,7 +1,9 @@
 package com.easybytes.easyschool.controller;
 
+import com.easybytes.easyschool.model.Courses;
 import com.easybytes.easyschool.model.EazyClass;
 import com.easybytes.easyschool.model.Person;
+import com.easybytes.easyschool.repository.CoursesRepository;
 import com.easybytes.easyschool.repository.EazyClassRepository;
 import com.easybytes.easyschool.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +29,9 @@ public class AdminController {
 
     @Autowired
     PersonRepository personRepository;
+
+    @Autowired
+    CoursesRepository coursesRepository;
 
     @RequestMapping("/displayClasses")
     public ModelAndView displayClasses(Model model) {
@@ -110,6 +115,17 @@ public class AdminController {
         httpSession.setAttribute("eazyClass", eazyClass);
 
         ModelAndView modelAndView = new ModelAndView("redirect:/admin/displayStudents?classId=" + eazyClass.getClassId());
+        return modelAndView;
+    }
+
+    @RequestMapping("/displayCourses")
+    public ModelAndView displayCourses(Model model) {
+        List<Courses> courses = coursesRepository.findAll();
+
+        ModelAndView modelAndView = new ModelAndView("courses_secure.html");
+        modelAndView.addObject("courses", courses);
+        modelAndView.addObject("course", new Courses());
+
         return modelAndView;
     }
 }

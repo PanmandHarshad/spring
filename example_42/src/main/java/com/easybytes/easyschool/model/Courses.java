@@ -1,6 +1,5 @@
 package com.easybytes.easyschool.model;
 
-
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +23,6 @@ public class Courses extends BaseEntity {
 
     private String fees;
 
-    @ManyToMany(mappedBy = "course_Id", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(mappedBy = "courses", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private Set<Person> persons = new HashSet<>();
 }

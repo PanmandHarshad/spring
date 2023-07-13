@@ -82,6 +82,6 @@ public class Person extends BaseEntity {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "person_courses",
             joinColumns = {@JoinColumn(name = "person_id", referencedColumnName = "personId")},
-            inverseJoinColumns = {@JoinColumn(name = "courseId", referencedColumnName = "course_Id")})
+            inverseJoinColumns = {@JoinColumn(name = "course_Id", referencedColumnName = "courseId")})
     private Set<Courses> courses;
 }

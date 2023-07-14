@@ -47,19 +47,29 @@ public class ContactService {
                         Sort.by(sortField).descending());
 
         return contactRepository.findByStatus(EazySchoolConstants.OPEN, pageable);
+        // return contactRepository.findOpenMsgs(EazySchoolConstants.OPEN, pageable);
+        // Named Native Query method does not support dynamic sorting
+        // return contactRepository.findOpenMsgsNative(EazySchoolConstants.OPEN, pageable);
     }
 
     public boolean updateMsgStatus(int contactId) {
         boolean isUpdated = false;
 
+        /*
         Optional<Contact> contact = contactRepository.findById(contactId);
         contact.ifPresent(contact1 -> contact1.setStatus(EazySchoolConstants.CLOSE));
 
         Contact updatedContact = contactRepository.save(contact.get());
         if (updatedContact.getUpdatedBy() != null) {
             isUpdated = true;
-        }
+        }*/
 
+        //int rowsModified = contactRepository.updateStatusById(EazySchoolConstants.CLOSE, contactId);
+        //int rowsModified = contactRepository.updateMsgStatus(EazySchoolConstants.CLOSE, contactId);
+        int rowsModified = contactRepository.updateMsgStatusNative(EazySchoolConstants.CLOSE, contactId);
+        if (rowsModified > 0) {
+            isUpdated = true;
+        }
         return isUpdated;
     }
 }

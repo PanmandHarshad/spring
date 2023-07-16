@@ -6,11 +6,14 @@ import com.easybytes.easyschool.repository.ContactRepository;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
@@ -34,7 +37,7 @@ public class ContactRestController {
         }
     }
 
-    @PostMapping("saveMsg")
+    @PostMapping("/saveMsg")
     public ResponseEntity<Response> saveMsg(@RequestHeader("invocationFrom") String invocationFrom,
                                             @Valid @RequestBody Contact contact) {
         log.info(String.format("Header invocationFrom = %s", invocationFrom));
@@ -43,6 +46,21 @@ public class ContactRestController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .header("isMsgSaved", "true")
+                .body(response);
+    }
+
+    @DeleteMapping("/deleteMsg")
+    public ResponseEntity<Response> deleteMsg(RequestEntity<Contact> requestEntity) {
+        HttpHeaders headers = requestEntity.getHeaders();
+        headers.forEach((key, value) ->
+                log.info(String.format("Header '%s' = %s", key, String.join("|", value)))
+        );
+
+        Contact contact = requestEntity.getBody();
+        contactRepository.delete(contact);
+        Response response = new Response("200", "Message successfully deleted");
+        return ResponseEntity
+                .status(HttpStatus.OK)
                 .body(response);
     }
 }

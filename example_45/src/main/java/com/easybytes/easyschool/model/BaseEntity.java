@@ -1,5 +1,7 @@
 package com.easybytes.easyschool.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 @Data
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdAt", "createdBy"})
 public class BaseEntity {
 
     @CreatedDate
@@ -36,12 +39,14 @@ public class BaseEntity {
 
     @LastModifiedDate
     @Column(insertable = false)
+    @JsonIgnore
     // Whenever insert operation happens this field will not be considered,
     // this field will not available in insert query
     LocalDateTime updatedAt;
 
     @LastModifiedBy
     @Column(insertable = false)
+    @JsonIgnore
     // Whenever insert operation happens this field will not be considered
     // this field will not available in insert query
     String updatedBy;

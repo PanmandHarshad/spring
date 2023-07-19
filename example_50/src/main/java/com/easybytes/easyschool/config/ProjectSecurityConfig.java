@@ -20,13 +20,15 @@ public class ProjectSecurityConfig {
          This is handled in thymeleaf itself.
          This is needed only if your application is developed using simple html pages
          */
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg", "/public/**", "/api/**", "/data-api/**"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg", "/public/**", "/api/**",
+                "/data-api/**", "/easyschool/actuator/**"));
 
         http.authorizeHttpRequests(requests ->
                 requests
                         .requestMatchers("/dashboard").authenticated()
                         .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/easyschool/actuator/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").authenticated()
                         .requestMatchers("/data-api/**").authenticated()
                         // Added '/**' to '/closeMsg' because we are passing Id as query param from

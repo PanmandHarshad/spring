@@ -38,8 +38,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/profile/**").permitAll()
-                        .requestMatchers("/courseses/**").permitAll() // To make search working in spring data rest working
-                        .requestMatchers("/contacts/**").permitAll() // To make search working in spring data rest working
+                        .requestMatchers("/data-api/**").permitAll() // HAL will be accessed using this path
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()

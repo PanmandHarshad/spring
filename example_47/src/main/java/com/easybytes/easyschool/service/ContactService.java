@@ -46,7 +46,7 @@ public class ContactService {
                 sortDir.equals("asc") ? Sort.by(sortField).ascending() :
                         Sort.by(sortField).descending());
 
-        return contactRepository.findByStatus(EazySchoolConstants.OPEN, pageable);
+        return contactRepository.findByStatusWithQuery(EazySchoolConstants.OPEN, pageable);
         // return contactRepository.findOpenMsgs(EazySchoolConstants.OPEN, pageable);
         // Named Native Query method does not support dynamic sorting
         // return contactRepository.findOpenMsgsNative(EazySchoolConstants.OPEN, pageable);

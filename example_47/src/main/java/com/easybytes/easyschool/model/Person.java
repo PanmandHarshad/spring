@@ -2,6 +2,7 @@ package com.easybytes.easyschool.model;
 
 import com.easybytes.easyschool.annotation.FieldsValueMatch;
 import com.easybytes.easyschool.annotation.PasswordValidator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
@@ -52,12 +53,14 @@ public class Person extends BaseEntity {
     // Use of @Transient annotation is, whenever communicating with Spring Data JPA
     // this field will not be considered for database operations.
     @Transient
+    @JsonIgnore // Don't want to show this in spring data rest
     private String confirmEmail;
 
 
     @NotBlank(message = "Password must not be blank")
     @Size(min = 5, message = "Password must be at least 5 characters long")
     @PasswordValidator
+    @JsonIgnore // Don't want to show this in spring data rest
     private String pwd;
 
     @NotBlank(message = "Confirm Password must not be blank")
@@ -65,6 +68,7 @@ public class Person extends BaseEntity {
     // Use of @Transient annotation is, whenever communicating with Spring Data JPA
     // this field will not be considered for database operations.
     @Transient
+    @JsonIgnore // Don't want to show this in spring data rest
     private String confirmPwd;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST, targetEntity = Roles.class)

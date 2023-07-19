@@ -3,12 +3,14 @@ package com.easybytes.easyschool.controller;
 import com.easybytes.easyschool.model.Person;
 import com.easybytes.easyschool.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+@Slf4j
 @Controller
 public class DashboardController {
 
@@ -29,6 +31,14 @@ public class DashboardController {
 
         //throw new RuntimeException("It's been a bad day !!");
         return "dashboard.html";
+    }
+
+    private void logMessages() {
+        log.error("Error message from the Dashboard page");
+        log.warn("Warning message from the Dashboard page");
+        log.info("Info message from the Dashboard page");
+        log.debug("Debug message from the Dashboard page");
+        log.trace("Trace message from the Dashboard page");
     }
 
 }

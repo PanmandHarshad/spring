@@ -20,7 +20,7 @@ public class ProjectSecurityConfig {
          This is handled in thymeleaf itself.
          This is needed only if your application is developed using simple html pages
          */
-        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg", "/public/**", "/api/**"));
+        http.csrf(csrf -> csrf.ignoringRequestMatchers("/saveMsg", "/public/**", "/api/**", "/data-api/**"));
 
         http.authorizeHttpRequests(requests ->
                 requests
@@ -28,6 +28,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("/displayMessages/**").hasRole("ADMIN")
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/**").authenticated()
+                        .requestMatchers("/data-api/**").authenticated()
                         // Added '/**' to '/closeMsg' because we are passing Id as query param from
                         // It is better to have '/**' because if in future if we change query param
                         // then we don't have to change here
@@ -38,7 +39,7 @@ public class ProjectSecurityConfig {
                         .requestMatchers("", "/", "/home").permitAll()
                         .requestMatchers("/holidays/**").permitAll()
                         .requestMatchers("/profile/**").permitAll()
-                        .requestMatchers("/data-api/**").permitAll() // HAL will be accessed using this path
+                        //.requestMatchers("/data-api/**").permitAll() // HAL will be accessed using this path
                         .requestMatchers("/contact").permitAll()
                         .requestMatchers("/saveMsg").permitAll()
                         .requestMatchers("/courses").permitAll()

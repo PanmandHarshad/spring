@@ -5,6 +5,7 @@ import com.easybytes.easyschool.repository.PersonRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,12 @@ public class DashboardController {
     @Autowired
     PersonRepository personRepository;
 
+    @Value("${easyschool.pageSize}")
+    private int defaultPageSize;
+
+    @Value("${easyschool.contact.successMsg}")
+    private String message;
+
     @RequestMapping("/dashboard")
     public String displayDashboard(Model model, Authentication authentication, HttpSession httpSession) {
         Person person = personRepository.readByEmail(authentication.getName());
@@ -24,6 +31,7 @@ public class DashboardController {
         model.addAttribute("username", person.getName());
         model.addAttribute("roles", authentication.getAuthorities().toString());
         httpSession.setAttribute("loggedInPerson", person);
+        logMessages();
 
         if (null != person.getEazyClass() && null != person.getEazyClass().getName()) {
             model.addAttribute("enrolledClass", person.getEazyClass().getName());
@@ -39,6 +47,9 @@ public class DashboardController {
         log.info("Info message from the Dashboard page");
         log.debug("Debug message from the Dashboard page");
         log.trace("Trace message from the Dashboard page");
+
+        log.error("defaultPagesize value with @Value annotation is : " + defaultPageSize);
+        log.error("successMsg value with @Value annotation is : " + message);
     }
 
 }

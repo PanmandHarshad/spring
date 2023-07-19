@@ -19,9 +19,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-@Profile("prod")
-public class EasySchoolUsernamePwdAuthenticationProvider implements AuthenticationProvider {
-
+@Profile("!prod")
+public class EasySchoolNonProdUsernamePwdAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     private PersonRepository personRepository;
     @Autowired
@@ -31,10 +30,9 @@ public class EasySchoolUsernamePwdAuthenticationProvider implements Authenticati
     public Authentication authenticate(Authentication authentication)
             throws AuthenticationException {
         String email = authentication.getName();
-        String password = authentication.getCredentials().toString();
         Person person = personRepository.readByEmail(email);
 
-        if (null != person && person.getPersonId() > 0 && passwordEncoder.matches(password, person.getPwd())) {
+        if (null != person && person.getPersonId() > 0) {
             return new UsernamePasswordAuthenticationToken(
                     email, // This will be considered as authenticated name
                     null,

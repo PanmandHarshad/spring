@@ -7,9 +7,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
 
@@ -21,8 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int userId;
 
-    @NotBlank(message = "Name must not be blank")
-    @Size(min = 2, message = "Name must be at least 2 characters long")
+    @NotBlank(message = "User name must not be blank")
+    @Size(min = 2, message = "User name must be at least 2 characters long")
     String userName;
 
     @NotBlank(message = "Email must not be blank")

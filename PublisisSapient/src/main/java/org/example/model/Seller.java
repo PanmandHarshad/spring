@@ -16,7 +16,7 @@ public class Seller {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int sellerId;
 
-    @NotBlank
+    @NotBlank(message = "Seller name must not be blank")
     String sellerName;
 
     @OneToMany(mappedBy = "seller")

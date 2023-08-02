@@ -1,10 +1,10 @@
 package org.example.model;
 
-import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -50,7 +50,7 @@ public class Product {
     @JoinColumn(name = "sellerId", nullable = false)
     Seller sellerId;
 
-    @NotNull(message = "LastUpdated must not be blank")
+    @LastModifiedDate
     LocalDateTime lastUpdated;
 
     @ManyToMany(mappedBy = "products", fetch = FetchType.EAGER)

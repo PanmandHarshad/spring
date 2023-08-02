@@ -4,11 +4,11 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Data
@@ -31,4 +31,7 @@ public class Inventory {
 
     @LastModifiedDate
     LocalDateTime lastUpdated;
+
+    @OneToMany(mappedBy = "inventory")
+    private List<Product> products = new ArrayList<>();
 }

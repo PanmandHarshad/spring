@@ -2,7 +2,6 @@ package org.example.model;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,14 +12,14 @@ import java.util.List;
 @Slf4j
 @Data
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"userId"}))
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int cardId;
 
-    @NotBlank(message = "User must not be blank")
-    User userId;
+    @OneToOne
+    @JoinColumn(name = "userProfileId", nullable = false, unique = true)
+    UserProfile userProfileId;
 
     @ManyToMany
     @JoinTable(name = "cart_product",

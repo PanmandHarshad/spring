@@ -8,12 +8,13 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Data
 @Entity
-public class Size {
+public class ItemSize {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int sizeId;
+    int itemSizeId;
 
     @NotBlank(message = "Size type must not be blank")
+    @ManyToOne
     @JoinColumn(name = "sizeTypeId", nullable = false)
     SizeType sizeType;
 

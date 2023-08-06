@@ -41,7 +41,11 @@ public class Product {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sizeId", nullable = false)
-    Size sizeId;
+    ItemSize itemSizeId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "inventoryId", nullable = false)
+    Inventory inventory;
 
     @NotBlank(message = "SKU must not be blank")
     String sku;

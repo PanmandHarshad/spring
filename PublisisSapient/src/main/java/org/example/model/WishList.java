@@ -1,7 +1,6 @@
 package org.example.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 
@@ -11,14 +10,14 @@ import java.util.List;
 @Slf4j
 @Data
 @Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"userId"}))
 public class WishList {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    String wishListId;
+    int wishListId;
 
-    @NotBlank(message = "User must not be blank")
-    User user;
+    @OneToOne
+    @JoinColumn(name = "userProfileId", nullable = false, unique = true)
+    UserProfile userProfile;
 
     @ManyToMany
     @JoinTable(

@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Slf4j
 @Data
 @Entity
-public class User {
+public class UserProfile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int userId;
+    int userProfileId;
 
     @NotBlank(message = "User name must not be blank")
     @Size(min = 2, message = "User name must be at least 2 characters long")

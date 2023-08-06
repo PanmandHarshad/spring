@@ -1,3 +1,7 @@
+create database eCommerce;
+
+use eCommerce;
+
 
 CREATE TABLE Brand (
     brandId INT PRIMARY KEY,
